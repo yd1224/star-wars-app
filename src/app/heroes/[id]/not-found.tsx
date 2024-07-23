@@ -3,10 +3,12 @@
 import React from "react";
 import Link from "next/link";
 import { Box, Text, ChakraProvider, Heading, Button } from "@chakra-ui/react";
+import { theme } from "../../../../theme";
 
+// NotFound component to display a 404 error page when content is not found
 export default function NotFound() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Box
         display="flex"
         flexDirection="column"

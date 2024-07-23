@@ -6,9 +6,10 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Star Wars App"
+  title: "Star Wars App",
 };
 
+// Root layout component for wrapping the entire application
 export default function RootLayout({
   children,
 }: Readonly<{

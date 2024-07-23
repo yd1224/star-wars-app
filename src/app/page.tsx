@@ -5,11 +5,15 @@ import getQueryClient from "@/lib/utils/getQueryClient";
 import HeroesList from "./components/heroes-list";
 import { ApiResponse } from "@/lib/types";
 
+// Component to render the Heroes page with a list of Star Wars heroes
 export default async function HeroesPage() {
+  // Create a query client for managing server state
   const queryClient = getQueryClient();
 
+  // Default endpoint for fetching heroes data
   const defaultEndpoint = `${STAR_WARS_API_BASE_URL}people/`;
 
+  // Prefetch the infinite query for heroes list
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["heroes"],
     queryFn: async ({ pageParam = defaultEndpoint }) =>
@@ -19,6 +23,7 @@ export default async function HeroesPage() {
     staleTime: 10 * 1000,
   });
 
+  // Dehydrate the query client state to send it to the client
   const dehydratedState = dehydrate(queryClient);
 
   return (

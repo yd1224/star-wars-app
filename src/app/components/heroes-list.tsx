@@ -1,22 +1,28 @@
 "use client";
 
 import React, { useEffect, useCallback } from "react";
-import { SimpleGrid, Box, Spinner } from "@chakra-ui/react";
+import { SimpleGrid, Box } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getHeroesListPages, STAR_WARS_API_BASE_URL } from "@/lib/api";
 import HeroCard from "./hero-card";
 import { useInView } from "react-intersection-observer";
 import { ApiResponse, Hero } from "@/lib/types";
+import Loader from "./loader";
 
+// Define the props interface for the HeroesList component
 export interface HeroesListProps {
   heroes?: Hero[];
 }
 
+// HeroesList component to display a list of heroes with infinite scrolling
 export default function HeroesList() {
+  // Hook to detect if the component is in view
   const { ref, inView } = useInView();
 
+  // Default endpoint for fetching heroes data
   const defaultEndPoint = `${STAR_WARS_API_BASE_URL}people/`;
 
+  // Use infinite query to fetch heroes data with pagination support
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<ApiResponse, Error>({
       queryKey: ["heroes"],
@@ -27,18 +33,21 @@ export default function HeroesList() {
       staleTime: 1e6,
     });
 
+  // Function to fetch the next page of data
   const handleFetchNextPage = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  // Effect to fetch the next page when the component is in view
   useEffect(() => {
     if (inView && hasNextPage) {
       handleFetchNextPage();
     }
   }, [inView, hasNextPage, isFetchingNextPage, handleFetchNextPage]);
 
+  // Flatten all pages into a single array of heroes
   const allHeroes = data?.pages.flatMap((page) => page.results) || [];
 
   return (
@@ -48,11 +57,7 @@ export default function HeroesList() {
           <HeroCard key={hero.id} hero={hero} />
         ))}
       </SimpleGrid>
-      {hasNextPage && !isFetchingNextPage && (
-        <Box ref={ref} display="flex" justifyContent="center" mt={4}>
-          <Spinner size="lg" color="#ff6b0a" />
-        </Box>
-      )}
+      <Loader isVisible={hasNextPage && !isFetchingNextPage} ref={ref} />
     </Box>
   );
 }

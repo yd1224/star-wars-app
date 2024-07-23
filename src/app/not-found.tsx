@@ -2,6 +2,7 @@
 
 import { Box, Text, ChakraProvider, Heading } from "@chakra-ui/react";
 
+// Component to display a 404 error page when a page is not found
 export default function NotFound() {
   return (
     <ChakraProvider>

@@ -1,27 +1,31 @@
 import React, { useRef, useEffect, useLayoutEffect } from "react";
 import { Handle, NodeProps, Position, Node } from "@xyflow/react";
-import styles from "./index.module.css";
 import { Box, Image, Text } from "@chakra-ui/react";
 
+// Define the data structure for the node
 export type NodeData = {
   label: string;
   imageType: string;
 };
 
-function MindMapNode({ id, data }: NodeProps<Node<NodeData>>) {
-  const inputRef = useRef<HTMLInputElement>();
-  //   const updateNodeLabel = useStore((state) => state.updateNodeLabel);
+// Custom node component for the mind map
+function MindMapNode({ data }: NodeProps<Node<NodeData>>) {
+  // Reference to the input element for dynamic width adjustment
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  // Adjust the width of the input element based on the length of the label
   useLayoutEffect(() => {
     if (inputRef.current) {
+      // Set width based on label length (approximated by multiplying length by 8 pixels per character)
       inputRef.current.style.width = `${data.label.length * 8}px`;
     }
   }, [data.label.length]);
 
+  // Focus the input element after the component mounts
   useEffect(() => {
     setTimeout(() => {
       if (inputRef.current) {
-        inputRef.current.focus({ preventScroll: true });
+        inputRef.current.focus({ preventScroll: true }); // Focus the input element, preventing scrolling
       }
     }, 1);
   }, []);
@@ -41,10 +45,9 @@ function MindMapNode({ id, data }: NodeProps<Node<NodeData>>) {
         textAlign={"center"}
         width={300}
       >
-        <Image src={`/icons/${data.imageType}.png`} boxSize={10}></Image>
+        <Image src={`/icons/${data.imageType}.png`} boxSize={10} />
         <Text>{data.label}</Text>
       </Box>
-
       <Handle type="target" position={Position.Top} />
       <Handle type="source" position={Position.Top} />
     </>
