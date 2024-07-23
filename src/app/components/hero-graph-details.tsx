@@ -17,6 +17,7 @@ import { notFound } from "next/navigation";
 import Loader from "./loader";
 import HeroParams from "./hero-params";
 import { Box } from "@chakra-ui/react";
+import BackButton from "./button";
 
 // Define custom node and edge types for the React Flow diagram
 const nodeTypes = {
@@ -108,7 +109,7 @@ function Flow({ heroId }: { heroId: string }) {
             speciesResults.map(
               (species) =>
                 species.data && (
-                  <Box key={species.data.name}>
+                  <Box key={species.data.name} paddingBottom={3}>
                     <HeroParams label={"Species"} value={species.data.name} />
                     <HeroParams
                       label={"Classification"}
@@ -121,6 +122,7 @@ function Flow({ heroId }: { heroId: string }) {
                   </Box>
                 )
             )}
+          <BackButton url="/" label="Back to Heroes" size="sm" />
         </Panel>
       </ReactFlow>
     </Box>

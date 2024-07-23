@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { Box, Text, ChakraProvider, Heading, Button } from "@chakra-ui/react";
+import { Box, Text, ChakraProvider, Heading } from "@chakra-ui/react";
 import { theme } from "../../../../theme";
+import BackButton from "@/app/components/button";
 
 // NotFound component to display a 404 error page when content is not found
 export default function NotFound() {
@@ -26,11 +26,7 @@ export default function NotFound() {
         <Text fontSize="2xl" fontWeight="bold" mb={4} color={"white"}>
           Could not find the hero
         </Text>
-        <Link href="/">
-          <Button colorScheme="orange" size="lg">
-            Back to heroes
-          </Button>
-        </Link>
+        <BackButton url="/" label="Back to Heroes" size="lg" />
       </Box>
     </ChakraProvider>
   );
