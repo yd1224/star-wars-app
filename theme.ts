@@ -8,4 +8,10 @@ export const theme = extendTheme({
       },
     },
   },
+  breakpoints: {
+    sm: "10em",
+    md: "40em",
+    lg: "62em",
+    xl: "80em",
+  },
 });

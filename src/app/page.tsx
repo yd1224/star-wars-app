@@ -28,7 +28,12 @@ export default async function HeroesPage() {
 
   return (
     <Container maxW="container.lg" pb={10} pt={18} w="85%">
-      <Text color="white" fontSize="2xl" fontWeight="bold" mb={4}>
+      <Text
+        color="white"
+        fontSize={{ sm: "10px", md: "40px" }}
+        fontWeight="bold"
+        mb={4}
+      >
         Star Wars Heroes
       </Text>
       <HydrationBoundary state={dehydratedState}>
